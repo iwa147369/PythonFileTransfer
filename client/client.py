@@ -46,13 +46,12 @@ def main():
                     #print("\n")
                     else:
                         f.close()
-                        udpsock.close()
                         print("Done.\n")
                         break
             else:
                 pass
         exitCode = int(input("Press '0' to exit.\n"))
-        
+    udpsock.close()
     tcpsock.close()
 
 if __name__ == "__main__":
