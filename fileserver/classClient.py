@@ -31,9 +31,9 @@ class ClientThread(Thread):
                             self.sock.sendto(b"", (self.ip,self.port))
                             print("Done.\n")
                             break
-                            # pass
             else:
-                print("ERR")
+                print("ERR.")
         else:
+            print("ERR.")
             self.sock.sendto("ERR".encode(), (self.ip,self.port))
 
