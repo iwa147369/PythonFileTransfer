@@ -13,9 +13,8 @@ class WorkerThread(Thread):
         self.filename = filename
         self.udpsock = udpsock
         self.addr = addr
-        self.DownloadFileFromFileServer()
     
-    def DownloadFileFromFileServer(self):
+    def run(self):
         self.udpsock.sendto(self.filename.encode(), self.addr)
         f = open(self.filename, "wb")
         while True:
@@ -24,7 +23,6 @@ class WorkerThread(Thread):
                 f.write(data)
             else:
                 f.close()
-                print("Done.\n")
                 break
 
 def main():
@@ -43,18 +41,17 @@ def main():
 
     try:
         while True:
-            filename = input("Download: ")
+            filename = input("Download: ").split(" ")
+            for temp in filename:
+                for i in listFile:
+                    if temp == i[0]:
+                        addr = i[1]
+                        break
 
-            addr = ()
-            for i in listFile:
-                if filename == i[0]:
-                    addr = i[1]
-                    break
+                udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-            udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-            newThread = WorkerThread(filename, udpsock, addr)
-            newThread.start()
+                newThread = WorkerThread(temp, udpsock, addr)
+                newThread.start()
 
             print("Ctrl C to exit.")
     except Exception as e:

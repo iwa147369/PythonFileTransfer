@@ -8,7 +8,7 @@ class ClientThread(Thread):
         self.port = port
         self.sock = sock
         
-        self.run()
+        # self.run()
 
     def run(self):
         listFile = ""

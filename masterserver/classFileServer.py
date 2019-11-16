@@ -8,7 +8,7 @@ class FileServerThread(Thread):
         self.sock = sock
         self.listFile= []
         print("Connect with this file server at: " + self.addr[0] + ":" + str(self.addr[1]))        
-        self.run()
+        # self.run()
 
     def run(self):
         # Recv List File from file server
