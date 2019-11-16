@@ -24,7 +24,6 @@ class ClientThread(Thread):
                         self.sock.sendto(bytesToSend, self.addr)
                     else:
                         self.sock.sendto(b"", self.addr)
-                        print("Done.\n")
                         break
         else:
             print("ERR.")
