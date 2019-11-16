@@ -14,14 +14,15 @@ class ClientThread(Thread):
         listFile = ""
         for thr in threadsServer:
             for i in thr.listFile:
-                listFile += i
-                listFile += ":"
+                temp = i + ":" + thr.ip + ":" + thr.port 
+                listFile += temp
+                listFile += ";"
         self.sock.send(listFile.encode()) 
 
-        data = self.sock.recv(BUFFER_SIZE).decode("ascii")
-        for thr in threadsServer:
-            for i in thr.listFile:
-                if (data == i):
-                    self.sock.send((thr.ip + ":" + str(thr.port)).encode())
-                    break
+        # data = self.sock.recv(BUFFER_SIZE).decode("ascii")
+        # for thr in threadsServer:
+        #     for i in thr.listFile:
+        #         if (data == i):
+        #             self.sock.send((thr.ip + ":" + str(thr.port)).encode())
+        #             break
 

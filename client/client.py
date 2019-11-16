@@ -12,20 +12,30 @@ def main():
     tcpsock.send("CL".encode())
 
     data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
-    listFile = data.split(":")
+    listFileData = data[:len(data) - 1].split(";")
+    listFile = []
     print("List File:")
-    for i in listFile:
-        print(i)
-        
+    for i in range(0,len(listFileData)):
+        temp = listFileData[i].split(":") 
+        print(temp[0])
+        listFile.append([temp[0], (temp[1], int(temp[2]))])
+
     exitCode = 1
     while exitCode:
         filename = input("Download: ")
-        tcpsock.send(filename.encode())
-        data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
-        addr = data.split(":")
+        # tcpsock.send(filename.encode())
+        # data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
+        # addr = data.split(":")
+
+        addr = ()
+        for i in listFile:
+            if filename == i[0]:
+                addr = i[1]
+                break
 
         udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        udpsock.sendto(filename.encode(), (addr[0], int(addr[1])))
+        print(addr)
+        udpsock.sendto(filename.encode(), addr)
     
         data, addr = udpsock.recvfrom(BUFFER_SIZE)
         if data.decode("ascii") == "ERR":
