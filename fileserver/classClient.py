@@ -20,6 +20,7 @@ class ClientThread(Thread):
         if (os.path.isfile(filename)):
             message= str(os.path.getsize(filename)) + ", download?(y/n)"
             self.sock.sendto(message.encode(), (self.ip,self.port))
+
             data, addr = self.sock.recvfrom(BUFFER_SIZE)
             if data.decode("ascii") == "y" or data.decode("ascii") == "Y":
                 with open(filename, "rb") as f:

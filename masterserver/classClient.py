@@ -12,6 +12,8 @@ class ClientThread(Thread):
 
     def run(self):
         listFile = ""
+
+        #Send List file to client
         for thr in threadsServer:
             for i in thr.listFile:
                 temp = i + ":" + thr.ip + ":" + thr.port 
@@ -19,10 +21,4 @@ class ClientThread(Thread):
                 listFile += ";"
         self.sock.send(listFile.encode()) 
 
-        # data = self.sock.recv(BUFFER_SIZE).decode("ascii")
-        # for thr in threadsServer:
-        #     for i in thr.listFile:
-        #         if (data == i):
-        #             self.sock.send((thr.ip + ":" + str(thr.port)).encode())
-        #             break
-
+       

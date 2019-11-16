@@ -6,10 +6,11 @@ from classClient import *
 FS_IP = "localhost"
 FS_PORT = random.randint(10000,65535)
 
-# ip, port của master server
+# ip, port of master server
 MS_IP = "localhost"
 MS_PORT = 1234
 
+# The maximum amount of data to be received at once is specified by BUFFER_SIZE
 BUFFER_SIZE = 1024
 
 threads = []

@@ -23,9 +23,6 @@ def main():
     exitCode = 1
     while exitCode:
         filename = input("Download: ")
-        # tcpsock.send(filename.encode())
-        # data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
-        # addr = data.split(":")
 
         addr = ()
         for i in listFile:
@@ -52,8 +49,6 @@ def main():
                     data, addr = udpsock.recvfrom(BUFFER_SIZE)
                     if data != b"":
                         f.write(data)
-                    #print(data)
-                    #print("\n")
                     else:
                         f.close()
                         print("Done.\n")

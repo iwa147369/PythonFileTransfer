@@ -12,6 +12,7 @@ class FileServerThread(Thread):
         self.run()
 
     def run(self):
+        # Recv List File from file server
         while True:
             self.sock.send("OK".encode())
             data = self.sock.recv(BUFFER_SIZE).decode("ascii")
