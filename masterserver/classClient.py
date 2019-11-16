@@ -16,7 +16,7 @@ class ClientThread(Thread):
         #Send List file to client
         for thr in threadsServer:
             for i in thr.listFile:
-                temp = i + ":" + thr.ip + ":" + thr.port 
+                temp = i + ":" + thr.addr[0] + ":" + str(thr.addr[1]) 
                 listFile += temp
                 listFile += ";"
         self.sock.send(listFile.encode()) 

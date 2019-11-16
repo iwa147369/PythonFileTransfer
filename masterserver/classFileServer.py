@@ -4,11 +4,10 @@ class FileServerThread(Thread):
 
     def __init__(self,ip,port,sock):
         Thread.__init__(self)
-        self.ip = ip
-        self.port = port
+        self.addr = (ip, port)
         self.sock = sock
         self.listFile= []
-        print("Connect with this file server at: " + self.ip + ":" + self.port)        
+        print("Connect with this file server at: " + self.addr[0] + ":" + str(self.addr[1]))        
         self.run()
 
     def run(self):

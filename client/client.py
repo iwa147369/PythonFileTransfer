@@ -34,27 +34,27 @@ def main():
         print(addr)
         udpsock.sendto(filename.encode(), addr)
     
-        data, addr = udpsock.recvfrom(BUFFER_SIZE)
-        if data.decode("ascii") == "ERR":
-            print("ERR")
-        elif data == "":
-            print("Done.\n")
-        else:
-            print(data.decode("ascii"))
-            userReponse = input()
-            udpsock.sendto(userReponse.encode(), (addr[0], int(addr[1])))
-            if userReponse == "y" or userReponse == "Y":
-                f = open(filename, "wb")
-                while True:
-                    data, addr = udpsock.recvfrom(BUFFER_SIZE)
-                    if data != b"":
-                        f.write(data)
-                    else:
-                        f.close()
-                        print("Done.\n")
-                        break
+        # data, addr = udpsock.recvfrom(BUFFER_SIZE)
+        # if data.decode("ascii") == "ERR":
+        #     print("ERR")
+        # elif data == "":
+        #     print("Done.\n")
+        # else:
+        #     print(data.decode("ascii"))
+        #     userReponse = input()
+        #     udpsock.sendto(userReponse.encode(), (addr[0], int(addr[1])))
+        #     if userReponse == "y" or userReponse == "Y":
+        f = open(filename, "wb")
+        while True:
+            data, addr = udpsock.recvfrom(BUFFER_SIZE)
+            if data != b"":
+                f.write(data)
             else:
-                pass
+                f.close()
+                print("Done.\n")
+                break
+            # else:
+            #     pass
         exitCode = int(input("Press '0' to exit.\n"))
     udpsock.close()
     tcpsock.close()

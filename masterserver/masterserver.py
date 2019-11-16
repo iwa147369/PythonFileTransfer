@@ -24,11 +24,11 @@ def main():
             newClientThread.start()
             threadsClient.append(newClientThread)
 
-    for t in threadsServer:
-        t.join()
+    # for t in threadsServer:
+    #     t.join()
 
-    for t in threadsClient:
-        t.join()
+    # for t in threadsClient:
+    #     t.join()
 
 if __name__ == "__main__":
     main()
