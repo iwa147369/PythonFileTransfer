@@ -26,39 +26,44 @@ class WorkerThread(Thread):
                 break
 
 def main():
-    tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcpsock.connect((MS_IP, MS_PORT))
-    tcpsock.send("CL".encode())
-
-    data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
-    listFileData = data[:len(data) - 1].split(";")
-    listFile = []
-    print("List File:")
-    for i in range(0,len(listFileData)):
-        temp = listFileData[i].split(":") 
-        print(temp[0])
-        listFile.append([temp[0], (temp[1], int(temp[2]))])
-
     try:
+        tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcpsock.connect((MS_IP, MS_PORT))
+        tcpsock.send("CL".encode())
+
+        data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
+        listFileData = data[:len(data) - 1].split(";")
+        listFile = []
+        print("List File:")
+        for i in range(0,len(listFileData)):
+            temp = listFileData[i].split(":") 
+            print(temp[0])
+            listFile.append([temp[0], (temp[1], int(temp[2]))])
+
+        udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
         while True:
             filename = input("Download: ").split(" ")
+            if filename[0] == "exit":
+                break
             for temp in filename:
                 for i in listFile:
                     if temp == i[0]:
                         addr = i[1]
                         break
 
-                udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+                # udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                 newThread = WorkerThread(temp, udpsock, addr)
                 newThread.start()
 
-            print("Ctrl C to exit.")
+            print("Nhap 'exit' de thoat.")
+
+        udpsock.close()
+        tcpsock.close()
     except Exception as e:
         print(e)
 
-    udpsock.close()
-    tcpsock.close()
+  
 
 if __name__ == "__main__":
     main()

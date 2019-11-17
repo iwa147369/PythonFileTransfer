@@ -17,12 +17,12 @@ threads = []
 
 def main():     
     print("------------------------File Server------------------------------")
-    print("Ctrl C to exit.")
+    print("Nhap 'exit' de thoat.")
     
-    # Connect with MasterServer
-    tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcpsock.connect((MS_IP, MS_PORT))
     try:
+        # Connect with MasterServer
+        tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcpsock.connect((MS_IP, MS_PORT))
         tcpsock.send(("FS, Listen client at " + FS_IP + ":" + str(FS_PORT)).encode())
         tcpsock.recv(BUFFER_SIZE)
         
