@@ -6,6 +6,8 @@ from classClient import *
 FS_IP = "localhost"
 FS_PORT = random.randint(10000,65535)
 
+fileDir = "./File"
+
 # ip, port of master server
 MS_IP = "localhost"
 MS_PORT = 1234
@@ -17,7 +19,6 @@ threads = []
 
 def main():     
     print("------------------------File Server------------------------------")
-    print("Nhap 'exit' de thoat.")
     
     try:
         # Connect with MasterServer
@@ -27,7 +28,7 @@ def main():
         tcpsock.recv(BUFFER_SIZE)
         
         # Send list file to MasterServer
-        listFile = os.listdir("./File")
+        listFile = os.listdir(fileDir)
         listFile.append("end")
         for i in listFile:
             tcpsock.send(i.encode())

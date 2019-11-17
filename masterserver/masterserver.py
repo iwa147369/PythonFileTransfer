@@ -4,7 +4,6 @@ from classFileServer import *
 
 def main():
     print("------------------------Master Server------------------------------")
-    print("Ctrl C to exit.")
     tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcpsock.bind((MS_IP, MS_PORT))
 
