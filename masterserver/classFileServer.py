@@ -21,5 +21,11 @@ class FileServerThread(Thread):
                 self.listFile.append(data)
                 
         self.sock.send("OK".encode())
+        try:
+            data = self.sock.recv(BUFFER_SIZE).decode("ascii")
+        except socket.error as e:
+            print(e)
+            self.listFile = []
+
 
 

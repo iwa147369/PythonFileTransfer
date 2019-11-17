@@ -19,6 +19,10 @@ class ClientThread(Thread):
                 temp = i + ":" + thr.addr[0] + ":" + str(thr.addr[1]) 
                 listFile += temp
                 listFile += ";"
-        self.sock.send(listFile.encode()) 
-
+        
+        if listFile != "":
+            self.sock.send(listFile.encode()) 
+        else:
+            self.sock.send("empty".encode()) 
+            
        

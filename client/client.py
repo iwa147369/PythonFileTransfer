@@ -32,33 +32,36 @@ def main():
         tcpsock.send("CL".encode())
 
         data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
-        listFileData = data[:len(data) - 1].split(";")
-        listFile = []
-        print("List File:")
-        for i in range(0,len(listFileData)):
-            temp = listFileData[i].split(":") 
-            print(temp[0])
-            listFile.append([temp[0], (temp[1], int(temp[2]))])
+        if data != "empty":
+            listFileData = data[:len(data) - 1].split(";")
+            listFile = []
+            print("List File:")
+            for i in range(0,len(listFileData)):
+                temp = listFileData[i].split(":") 
+                print(temp[0])
+                listFile.append([temp[0], (temp[1], int(temp[2]))])
 
-        udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-        while True:
-            filename = input("Download: ").split(" ")
-            if filename[0] == "exit":
-                break
-            for temp in filename:
-                for i in listFile:
-                    if temp == i[0]:
-                        addr = i[1]
-                        break
+            while True:
+                filename = input("Download: ").split(" ")
+                if filename[0] == "exit":
+                    break
+                for temp in filename:
+                    for i in listFile:
+                        if temp == i[0]:
+                            addr = i[1]
+                            break
 
-                # udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                newThread = WorkerThread(temp, udpsock, addr)
-                newThread.start()
+                    # udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                    newThread = WorkerThread(temp, udpsock, addr)
+                    newThread.start()
 
-            print("Nhap 'exit' de thoat.")
+                print("Nhap 'exit' de thoat.")
 
-        udpsock.close()
+            udpsock.close()
+        else:
+            print("Khong co file de download")
         tcpsock.close()
     except Exception as e:
         print(e)
