@@ -9,7 +9,7 @@ BUFFER_SIZE = 1024
 
 class WorkerThread(Thread):
     def __init__(self, filename, udpsock, addr):
-        super().__init__()
+        Thread.__init__(self)
         self.filename = filename
         self.udpsock = udpsock
         self.addr = addr
@@ -53,7 +53,6 @@ def main():
                             addr = i[1]
                             break
 
-                    # udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
                     newThread = WorkerThread(temp, udpsock, addr)
                     newThread.start()
 

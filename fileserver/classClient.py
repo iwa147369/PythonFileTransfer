@@ -12,7 +12,6 @@ class ClientThread(Thread):
         self.addr = addr
         self.sock = sock
         print ("New client connected: " + self.addr[0] + ":" + str(self.addr[1]))
-        # self.run()
 
     def run(self):
         filename = "./File/" + self.data

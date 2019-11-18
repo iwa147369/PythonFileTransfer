@@ -40,7 +40,7 @@ def main():
         while True:
             #recv file name and addr of client
             data, addr = udpsock.recvfrom(BUFFER_SIZE)
-            print(data.decode("ascii"))
+            print(str(addr) + " download: " + data.decode("ascii"))
             newClient = ClientThread(addr, udpsock, data)
             newClient.start()
             threads.append(newClient)
