@@ -17,7 +17,7 @@ The master server has a fixed IP and port address and is responsible for the fol
 ## File Servers
 The file servers contain the files that can be shared with clients. 
 
-*When a file server starts up, it connects to the master server and sends its own information, including the list of shared files, IP address, and port, using the service provided by the master server (service #1). The file servers also provide the following service:
+* When a file server starts up, it connects to the master server and sends its own information, including the list of shared files, IP address, and port, using the service provided by the master server (service #1). The file servers also provide the following service:
 
 * A service for clients to download files, using the UDP protocol at the Transport layer. This service allows multiple clients to connect at the same time.
 In addition, when a file server is down, the master server needs to remove the file list of the corresponding file server.
