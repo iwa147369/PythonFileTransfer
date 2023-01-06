@@ -1,6 +1,6 @@
 # Python File Transfer
 <p>File Transfer - Python Networking </p>
-<p> Authur: Iwa </p>
+<p> Author: Iwa </p>
 
 ![alt](model_of_the_system.png)
 
