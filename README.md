@@ -2,7 +2,7 @@
 <p>File Transfer - Python Networking </p>
 <p> Authur: Iwa </p>
 
-![alt](https://raw.githubusercontent.com/iwa147369/PythonFileTransfer/master/model_of_the_system.png?token=GHSAT0AAAAAAB4YLE6GDCHJTXDUDROTONMQY5NMHDQ)
+![alt](model_of_the_system.png)
 
 # Introduction
 The project consists of three main components: a master server, multiple file servers, and clients. The master server is responsible for maintaining information about the file servers and their shared files, while the file servers contain the actual files that can be shared with clients. Clients can connect to the master server and file servers to request the list of shared files and download them, respectively.
