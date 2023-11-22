@@ -1,6 +1,7 @@
-from header import *
+from threading import Thread
+from config import threads_server
 
-class ClientThread(Thread):
+class Client(Thread):
 
     def __init__(self,ip,port,sock):
         Thread.__init__(self)
@@ -9,17 +10,17 @@ class ClientThread(Thread):
         self.sock = sock
         
     def run(self):
-        listFile = ""
+        files = ""
 
         #Send List file to client
-        for thr in threadsServer:
-            for i in thr.listFile:
+        for thr in threads_server:
+            for i in thr.files:
                 temp = i + ":" + thr.addr[0] + ":" + str(thr.addr[1]) 
-                listFile += temp
-                listFile += ";"
+                files += temp
+                files += ";"
         
-        if listFile != "":
-            self.sock.send(listFile.encode()) 
+        if files != "":
+            self.sock.send(files.encode()) 
         else:
             self.sock.send("empty".encode()) 
             

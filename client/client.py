@@ -2,23 +2,23 @@ import socket
 import os
 from threading import Thread
 
-MS_IP = "localhost"
-MS_PORT = 1234
+ms_ip = "localhost"
+ms_port = 1234
 
-BUFFER_SIZE = 1024
+buffer_size = 1024
 
 class WorkerThread(Thread):
-    def __init__(self, filename, udpsock, addr):
+    def __init__(self, filename, udp_sock, addr):
         Thread.__init__(self)
         self.filename = filename
-        self.udpsock = udpsock
+        self.udp_sock = udp_sock
         self.addr = addr
     
     def run(self):
-        self.udpsock.sendto(self.filename.encode(), self.addr)
+        self.udp_sock.sendto(self.filename.encode(), self.addr)
         f = open(self.filename, "wb")
         while True:
-            data, self.addr = self.udpsock.recvfrom(BUFFER_SIZE)
+            data, self.addr = self.udp_sock.recvfrom(buffer_size)
             if data != b"":
                 f.write(data)
             else:
@@ -27,45 +27,43 @@ class WorkerThread(Thread):
 
 def main():
     try:
-        tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcpsock.connect((MS_IP, MS_PORT))
-        tcpsock.send("CL".encode())
+        tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcp_sock.connect((ms_ip, ms_port))
+        tcp_sock.send("CL".encode())
 
-        data = tcpsock.recv(BUFFER_SIZE).decode("ascii")
+        data = tcp_sock.recv(buffer_size).decode("ascii")
         if data != "empty":
-            listFileData = data[:len(data) - 1].split(";")
-            listFile = []
-            print("List File:")
-            for i in range(0,len(listFileData)):
-                temp = listFileData[i].split(":") 
+            list_file_data = data[:len(data) - 1].split(";")
+            list_file = []
+            print("List Files:")
+            for i in range(0,len(list_file_data)):
+                temp = list_file_data[i].split(":") 
                 print(temp[0])
-                listFile.append([temp[0], (temp[1], int(temp[2]))])
+                list_file.append([temp[0], (temp[1], int(temp[2]))])
 
-            udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
             while True:
                 filename = input("Download: ").split(" ")
                 if filename[0] == "exit":
                     break
                 for temp in filename:
-                    for i in listFile:
+                    for i in list_file:
                         if temp == i[0]:
                             addr = i[1]
                             break
 
-                    newThread = WorkerThread(temp, udpsock, addr)
-                    newThread.start()
+                    new_thread = WorkerThread(temp, udp_sock, addr)
+                    new_thread.start()
 
-                print("Nhap 'exit' de thoat.")
+                print("Enter 'exit' to quit.")
 
-            udpsock.close()
+            udp_sock.close()
         else:
-            print("Khong co file de download")
-        tcpsock.close()
+            print("No files available for download.")
+        tcp_sock.close()
     except Exception as e:
         print(e)
-
-  
 
 if __name__ == "__main__":
     main()

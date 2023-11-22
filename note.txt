@@ -1,0 +1,38 @@
+Reconstruct project.
+Documentation.
+
+Mater Server:
+- Start/Stop master server.
+- Use a multithreading or asynchronous approach to handle multiple client and file server connections simultaneously.
+- List all running servers.
+- Kill a specific server by name or id.
+- Get the status of a server by name or id. Send signal to a specific server by name or id by checking if a server is alive by name or id.
+- Show help message for master server.
+- Logging all events.
+
+File Server:
+- When run file server, if ./File have not existed, automate create this folder.
+- Auto rescan ./File folder whenever have new file in this folder.
+- If a file is deleted from File folder, remove it from the list of files that can be downloaded by clients.
+- Support download multiple files at once.
+- Add support for uploading files.
+- Use a multithreading or asynchronous approach to handle multiple client and file server connections simultaneously.
+- Define the communication protocols for file servers when communicate with master server and client (the format for sending 
+information to the master server during registration.)
+- Implementation for UDP checksum and error checking during transfer file to client and send information to master server.
+
+Client:
+- Download file(s) from file server.
+- Upload file(s) to file server.
+- Display information about current connection status.
+- Connect to another master server by IP or domain name.
+- Disconnect from current master server.
+- Define the protocols for clients to communicate with both the master server and file servers.
+- Send command line to master server and get response with list of file servers.
+- Get list of available file servers.
+- Get list of available files on file servers.
+- Search for files based on keywords.
+
+
+
+

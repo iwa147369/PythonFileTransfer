@@ -1,56 +1,41 @@
 import socket
 import os
-import random
-from classClient import *
 
-FS_IP = "localhost"
-FS_PORT = random.randint(10000,65535)
+from client import Client
+from config import *
 
-fileDir = "./File"
-
-# ip, port of master server
-MS_IP = "localhost"
-MS_PORT = 1234
-
-# The maximum amount of data to be received at once is specified by BUFFER_SIZE
-BUFFER_SIZE = 1024
-
-threads = []
-
-def main():     
+def main():
     print("------------------------File Server------------------------------")
     
     try:
         # Connect with MasterServer
-        tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcpsock.connect((MS_IP, MS_PORT))
-        tcpsock.send(("FS, Listen client at " + FS_IP + ":" + str(FS_PORT)).encode())
-        tcpsock.recv(BUFFER_SIZE)
+        tcp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcp_sock.connect((ms_ip, ms_port))
+        tcp_sock.send(("FS, Listen client at " + fs_ip + ":" + str(fs_port)).encode())
+        tcp_sock.recv(buffer_size)
         
         # Send list file to MasterServer
-        listFile = os.listdir(fileDir)
-        listFile.append("end")
-        for i in listFile:
-            tcpsock.send(i.encode())
-            tcpsock.recv(BUFFER_SIZE)
+        list_file = os.listdir(file_dir)
+        list_file.append("end")
+        for i in list_file:
+            tcp_sock.send(i.encode())
+            tcp_sock.recv(buffer_size)
 
         # create UDP socket for client connected
-        udpsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        udpsock.bind((FS_IP, FS_PORT))
+        udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        udp_sock.bind((fs_ip, fs_port))
         while True:
-            #recv file name and addr of client
-            data, addr = udpsock.recvfrom(BUFFER_SIZE)
+            # recv file name and addr of client
+            data, addr = udp_sock.recvfrom(buffer_size)
             print(str(addr) + " download: " + data.decode("ascii"))
-            newClient = ClientThread(addr, udpsock, data)
-            newClient.start()
-            threads.append(newClient)
+            new_client = Client(addr, udp_sock, data)
+            new_client.start()
+            threads.append(new_client)
 
-        udpsock.close()
-        tcpsock.close()
+        udp_sock.close()
+        tcp_sock.close()
     except Exception as e:
         print(e)
 
 if __name__ == "__main__":
     main()
-
-   
